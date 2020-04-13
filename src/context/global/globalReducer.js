@@ -1,12 +1,12 @@
 export default (state, action) => {
   switch (action.type) {
-    case "DEFAULT_JOBS_LOADED":
+    case "SET_DEFAULT_JOBS":
       return {
         ...state,
         defaultJobs: action.payload,
         loading: false
       };
-    case "SEARCH_JOBS":
+    case "SET_SEARCH_JOBS":
       return {
         ...state,
         searchJobs: action.payload,
@@ -21,6 +21,21 @@ export default (state, action) => {
       return {
         ...state,
         model: { ...action.payload }
+      };
+    case "CLEAR_SEARCH_JOBS":
+      return {
+        ...state,
+        searchJobs: []
+      };
+    case "CLEAR_DEFAULT_JOBS":
+      return {
+        ...state,
+        defaultJobs: []
+      };
+    case "SET_ERR":
+      return {
+        ...state,
+        err: action.payload
       };
     default:
       return {

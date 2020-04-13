@@ -8,7 +8,11 @@ const JobsSection = () => {
   return (
     <section className='jobs'>
       <h2 className='brows'>Browse Jobs </h2>
-      {!loading ? defaultJobs.map(item => <Item item={item} />) : <Spinner />}
+      {!loading ? (
+        defaultJobs.map(item => <Item key={item.id} item={item} />)
+      ) : (
+        <Spinner />
+      )}
       <div class='row'>
         <div className='col-md-12 col-sm-12' style={{ textAlign: "center" }}>
           <button className='brows-btn'>

@@ -27,7 +27,12 @@ const Stat = () => {
     <section class='counter'>
       <div class='container'>
         {stats.map(st => (
-          <Statistique icon={st.icon} name={st.name} number={st.number} />
+          <Statistique
+            key={st.name}
+            icon={st.icon}
+            name={st.name}
+            number={st.number}
+          />
         ))}
       </div>
     </section>

@@ -11,7 +11,7 @@ const Banner = props => {
     setSearch({ ...searchValue, [e.target.name]: e.target.value });
   };
 
-  const SearchSubmit = e => {
+  const SearchSubmit = () => {
     props.history.push(
       `/search?skill=${searchValue.skill}&location=${searchValue.location}`
     );
@@ -44,7 +44,15 @@ const Banner = props => {
                 />
               </div>
               <div className='col-md-2 col-sm-2 no-pad'>
-                <button className='btn seub-btn' onClick={SearchSubmit}>
+                <button
+                  className={
+                    (!searchValue.location == "") |
+                    (!searchValue.skill.lenght == "")
+                      ? "btn seub-btn"
+                      : "btn seub-btn disabled "
+                  }
+                  onClick={SearchSubmit}
+                >
                   submit
                 </button>
               </div>

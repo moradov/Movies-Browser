@@ -32,7 +32,7 @@ const Features = () => {
       icon: "fa fa-wrench"
     },
     {
-      name: "FIND DATA",
+      name: "FIND DAT",
       description:
         "we provide diffrent type of data by using advace API let access useful analitict about jobs field ",
       icon: "fa fa-rocket"

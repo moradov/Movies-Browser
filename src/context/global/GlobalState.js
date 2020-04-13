@@ -2,49 +2,71 @@ import React, { useReducer } from "react";
 import GlobalContext from "./globalContext";
 import globalReducer from "./globalReducer";
 import axios from "axios";
+import {
+  SET_DEFAULT_JOBS,
+  SET_SEARCH_JOBS,
+  SET_LOADING,
+  SET_MODEL,
+  SET_ERR,
+  CLEAR_SEARCH_JOBS,
+  CLEAR_DEAFAULT_JOBS
+} from "../types";
 const GlobalState = props => {
   const initState = {
     defaultJobs: [],
     searchJobs: [],
     loading: false,
-    model: {
-      display: false,
-      msg: ""
-    }
+    model: null,
+    err: null
   };
   const [state, dispatch] = useReducer(globalReducer, initState);
   // get default jobs for home page
-  const getDefaultJobs = async () => {
+  const getDefaultJobs = () => {
     setLoading(true);
-    try {
-      const res = await axios.get(
+    setError(null);
+    clearDefaultJobs();
+    axios
+      .get(
         "https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=10&what_and=web"
-      );
-      dispatch({ type: "DEFAULT_JOBS_LOADED", payload: res.data.results });
-      console.log(res.data.results);
-    } catch (error) {
-      console.log(error);
-    }
+      )
+      .then(res => {
+        dispatch({ type: SET_DEFAULT_JOBS, payload: res.data.results });
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(1);
+      });
   };
   // get jobs by search
-  const getJobs = async data => {
+  const getJobs = data => {
     setLoading(true);
-    try {
-      const res = await axios.get(
-        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=100&what=${data[0]}&where=${data[1]}`
-      );
-      dispatch({ type: "SEARCH_JOBS", payload: res.data.results });
-      console.log(res);
-      console.log(data[0], data[1]);
-    } catch (error) {
-      console.log(error);
-    }
+    setError(null);
+    clearSearchJobs();
+    axios
+      .get(
+        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=100&what=${data.skill}&where=${data.loaction}`
+      )
+      .then(res => {
+        dispatch({ type: SET_SEARCH_JOBS, payload: res.data.results });
+        setLoading(false);
+      })
+      .catch(err => {
+        setLoading(false);
+        setError(2);
+      });
   };
   // set loadin
-  const setLoading = value => dispatch({ type: "SET_LOADING", payload: value });
+  const setLoading = value => dispatch({ type: SET_LOADING, payload: value });
   // set model
-  const setModel = modelArgs =>
-    setTimeout(() => dispatch({ type: "SET_MODEL", payload: modelArgs }), 2000);
+  const setModel = modelId =>
+    setTimeout(() => dispatch({ type: SET_MODEL, payload: modelId }), 2000);
+  // set err
+  const setError = err => dispatch({ type: SET_ERR, payload: err });
+  // clear searched jobs
+  const clearSearchJobs = () => dispatch({ type: CLEAR_SEARCH_JOBS });
+  //clear default jobs
+  const clearDefaultJobs = () => dispatch({ type: CLEAR_DEAFAULT_JOBS });
+
   return (
     <GlobalContext.Provider
       value={{

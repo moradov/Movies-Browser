@@ -6,11 +6,11 @@ import registerServiceWorker from "./registerServiceWorker";
 import { BrowserRouter } from "react-router-dom";
 import GloabalState from "../src/context/global/GlobalState";
 const app = (
-  <BrowserRouter>
-    <GloabalState>
+  <GloabalState>
+    <BrowserRouter>
       <App />
-    </GloabalState>
-  </BrowserRouter>
+    </BrowserRouter>
+  </GloabalState>
 );
 
 ReactDOM.render(app, document.getElementById("root"));

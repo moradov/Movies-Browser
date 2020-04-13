@@ -10,8 +10,10 @@ const Item = props => {
           >
             <span className='letter'>
               {props.item.company.display_name
-                .replace(/(<([^>]+)>)/gi, "")
-                .charAt(0)}{" "}
+                ? props.item.company.display_name
+                    .replace(/(<([^>]+)>)/gi, "")
+                    .charAt(0)
+                : null}{" "}
             </span>
           </div>
         </div>

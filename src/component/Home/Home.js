@@ -8,6 +8,7 @@ import MembersCard from "../../component/MembersCard/MembersCard";
 import Contact from "../../component/Contact/Contact";
 import Footer from "../../component/Footer/Footer";
 const Home = props => {
+  console.log(props);
   const { getDefaultJobs } = useContext(GlobalContext);
   useEffect(() => getDefaultJobs(), []);
   return (
