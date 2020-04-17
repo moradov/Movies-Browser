@@ -1,16 +1,12 @@
-import React, { Fragment, useContext } from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
-import globalContext from "./context/global/globalContext";
-import Navbar from "./component/UI/Navbar/Navbar";
-import Home from "./component/Home/Home";
+import React, { Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
+import Navbar from "./component/Navbar/Navbar";
+import Home from "./pages/Home/Home";
 import Search from "./pages/Search/Search";
-import Model from "./component/UI/Model/Model";
 const App = () => {
-  const { model } = useContext(globalContext);
   return (
     <Fragment>
       <Navbar />
-      {model.display ? <Model msg={model.msg} /> : null}
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/search' exact component={Search} />

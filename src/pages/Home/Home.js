@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, Fragment } from "react";
-import Banner from "../Banner.js/Banner";
-import Features from "../Features/Features";
-import Stat from "../Statistiques/Statistiques";
 import GlobalContext from "../../context/global/globalContext";
-import DefaultJobsSection from "../JobsSecton/JobsSection";
+import Banner from "../../component/Banner/Banner";
+import Features from "../../component/Features/Features";
+import Stat from "../../component/Statistiques/Statistiques";
+import DefaultJobsSection from "../../component/JobsSecton/JobsSection";
 import MembersCard from "../../component/MembersCard/MembersCard";
 import Contact from "../../component/Contact/Contact";
 import Footer from "../../component/Footer/Footer";
-const Home = props => {
-  console.log(props);
+import Alert from "../../component/Alert/Alert";
+const Home = () => {
   const { getDefaultJobs } = useContext(GlobalContext);
+  //get jobs data from the API when component is loaded
   useEffect(() => getDefaultJobs(), []);
   return (
     <Fragment>
+      <Alert />
       <Banner />
       <Features />
       <Stat />

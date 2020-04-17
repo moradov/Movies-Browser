@@ -9,17 +9,27 @@ import {
   SET_MODEL,
   SET_ERR,
   CLEAR_SEARCH_JOBS,
-  CLEAR_DEAFAULT_JOBS
+  CLEAR_DEFAULT_JOBS,
+  SET_SEARCH_KEYS,
+  CLEAR_MODEL
 } from "../types";
 const GlobalState = props => {
   const initState = {
     defaultJobs: [],
+    searchKeys: { skill: "", location: "" },
     searchJobs: [],
     loading: false,
     model: null,
     err: null
   };
+  // init reducer
   const [state, dispatch] = useReducer(globalReducer, initState);
+
+  //setSeachKey
+  const setSearchKeys = SearchValues => {
+    dispatch({ type: SET_SEARCH_KEYS, payload: SearchValues });
+  };
+
   // get default jobs for home page
   const getDefaultJobs = () => {
     setLoading(true);
@@ -34,21 +44,26 @@ const GlobalState = props => {
         setLoading(false);
       })
       .catch(err => {
+        setLoading(false);
         setError(1);
       });
   };
   // get jobs by search
   const getJobs = data => {
+    console.log(data);
     setLoading(true);
     setError(null);
     clearSearchJobs();
     axios
       .get(
-        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=100&what=${data.skill}&where=${data.loaction}`
+        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=100&what=${
+          data ? data.skill : state.searchKeys.skill
+        }&where=${data ? data.location : state.searchKeys.location}`
       )
       .then(res => {
         dispatch({ type: SET_SEARCH_JOBS, payload: res.data.results });
         setLoading(false);
+        console.log(data);
       })
       .catch(err => {
         setLoading(false);
@@ -59,13 +74,20 @@ const GlobalState = props => {
   const setLoading = value => dispatch({ type: SET_LOADING, payload: value });
   // set model
   const setModel = modelId =>
-    setTimeout(() => dispatch({ type: SET_MODEL, payload: modelId }), 2000);
+    setTimeout(() => {
+      dispatch({ type: SET_MODEL, payload: modelId });
+      clearModel();
+    }, 2000);
+  // clearn model
+  const clearModel = () =>
+    setTimeout(() => dispatch({ type: CLEAR_MODEL }), 2000);
+
   // set err
   const setError = err => dispatch({ type: SET_ERR, payload: err });
   // clear searched jobs
   const clearSearchJobs = () => dispatch({ type: CLEAR_SEARCH_JOBS });
   //clear default jobs
-  const clearDefaultJobs = () => dispatch({ type: CLEAR_DEAFAULT_JOBS });
+  const clearDefaultJobs = () => dispatch({ type: CLEAR_DEFAULT_JOBS });
 
   return (
     <GlobalContext.Provider
@@ -73,10 +95,14 @@ const GlobalState = props => {
         defaultJobs: state.defaultJobs,
         searchJobs: state.searchJobs,
         loading: state.loading,
-        model: { ...state.model },
+        model: state.model,
+        searchKeys: state.searchKeys,
+        err: state.err,
         setModel,
         getDefaultJobs,
-        getJobs
+        getJobs,
+        setSearchKeys,
+        clearModel
       }}
     >
       {props.children}

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import globalContext from "../../context/global/globalContext";
-const Contact = props => {
+const Contact = () => {
   const { setModel } = useContext(globalContext);
   const [subInput, setSubInput] = useState("");
   const subscribeSubmit = () => {
     // once subscribtion is done set a model
-    setModel({ display: true, msg: "subscribtion is done" });
-    setSubInput("");
+    if (subInput.length > 0) {
+      setModel({ display: true, msg: "subscription done" });
+      setSubInput("");
+    }
   };
   const subInputHund = e => setSubInput(e.target.value);
   return (
@@ -21,13 +23,14 @@ const Contact = props => {
             </p>
             <div className='input-group'>
               <input
-                type='text'
+                type='email'
+                required
                 className='form-control'
                 placeholder='Type Your Email Address...'
                 onChange={subInputHund}
                 value={subInput}
               />
-              <span class='input-group-btn'>
+              <span className='input-group-btn'>
                 <button
                   type='text'
                   className='btn btn-default'

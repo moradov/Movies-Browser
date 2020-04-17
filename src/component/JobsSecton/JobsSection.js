@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Item from "../Item/Item";
 import GlobalContext from "../../context/global/globalContext";
-import Spinner from "../UI/Spinner/Spinner";
+import Spinner from "../Spinner/Spinner";
 const JobsSection = () => {
   const { defaultJobs, loading } = useContext(GlobalContext);
   return (
@@ -13,12 +13,12 @@ const JobsSection = () => {
       ) : (
         <Spinner />
       )}
-      <div class='row'>
+      <div className='row'>
         <div className='col-md-12 col-sm-12' style={{ textAlign: "center" }}>
           <button className='brows-btn'>
             <Link className='tag' to={"/search?skill=&location="}>
               Brows All Jobs
-            </Link>{" "}
+            </Link>
           </button>
         </div>
       </div>

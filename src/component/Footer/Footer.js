@@ -1,5 +1,28 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import globalContext from "../../context/global/globalContext";
 const Footer = () => {
+  const { setModel } = useContext(globalContext);
+  //create state to store inputs values
+  const [inptVal, setInpsVal] = useState({
+    name: "",
+    email: "",
+    msg: ""
+  });
+  // inputs hundler => put inputs values to the state
+  const inptHund = e =>
+    setInpsVal({ ...inptVal, [e.target.name]: e.target.value });
+  //on submit the for
+  const formSubmited = event => {
+    event.preventDefault();
+    // show msg
+    setModel({ display: true, msg: "your message is sent" });
+    //clear the state
+    setInpsVal({
+      name: "",
+      email: "",
+      msg: ""
+    });
+  };
   return (
     <footer>
       <div className='container'>
@@ -30,20 +53,36 @@ const Footer = () => {
 
         <div className='col-md-4 col-sm-6'>
           <h4>Drop A Mail</h4>
-          <form>
+          <form onSubmit={formSubmited}>
             <input
+              name='name'
               type='text'
               className='form-control input-lg'
               placeholder='Your Name'
+              required
+              onChange={inptHund}
+              value={inptVal.name}
             />
             <input
-              type='text'
+              name='email'
+              type='email'
               className='form-control input-lg'
               placeholder='Email...'
+              required
+              onChange={inptHund}
+              value={inptVal.email}
             />
-            <textarea className='form-control' placeholder='Message'></textarea>
+            <textarea
+              name='msg'
+              type='text'
+              required
+              className='form-control'
+              placeholder='Message'
+              onChange={inptHund}
+              value={inptVal.msg}
+            ></textarea>
             <button type='submit' className='btn btn-primary'>
-              Login
+              Send
             </button>
           </form>
         </div>

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
-import "../Banner.js/Banner.css";
+import globalContext from "../../context/global/globalContext";
 
-const Banner = props => {
-  const [searchValue, setSearch] = useState({
-    skill: "",
-    location: ""
-  });
+const Banner = ({ history }) => {
+  //pull the needed values from the global context
+  const { searchKeys, setSearchKeys } = useContext(globalContext);
+
+  // set search inputs values to the global context
   const inputHund = e => {
-    setSearch({ ...searchValue, [e.target.name]: e.target.value });
+    setSearchKeys({ ...searchKeys, [e.target.name]: e.target.value });
   };
-
+  //on submit
   const SearchSubmit = () => {
-    props.history.push(
-      `/search?skill=${searchValue.skill}&location=${searchValue.location}`
+    history.push(
+      `/search?skill=${searchKeys.skill}&location=${searchKeys.location}`
     );
   };
 
@@ -46,12 +46,18 @@ const Banner = props => {
               <div className='col-md-2 col-sm-2 no-pad'>
                 <button
                   className={
-                    (!searchValue.location == "") |
-                    (!searchValue.skill.lenght == "")
-                      ? "btn seub-btn"
-                      : "btn seub-btn disabled "
+                    // eslint-disable-next-line
+                    !searchKeys.location == "" || !searchKeys.skill == ""
+                      ? "btn seub-btn "
+                      : "btn seub-btn disabled"
                   }
                   onClick={SearchSubmit}
+                  disabled={
+                    // eslint-disable-next-line
+                    !searchKeys.location == "" || !searchKeys.skill == ""
+                      ? false
+                      : true
+                  }
                 >
                   submit
                 </button>

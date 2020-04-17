@@ -1,7 +1,10 @@
 import React from "react";
-
 const ErrHund = () => {
-  return <div>You may lost youre connection try again</div>;
+  return (
+    <div style={{ textAlign: "center", fontSize: "22px", paddingTop: "143px" }}>
+      maybe you lost connection
+    </div>
+  );
 };
 
 export default ErrHund;

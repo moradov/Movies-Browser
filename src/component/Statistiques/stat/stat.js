@@ -1,17 +1,19 @@
 import React from "react";
-
-const stat = props => {
+import PropTypes from "prop-types";
+const Stat = ({ statData: { icon, number, name } }) => {
   return (
-    <div class='col-md-3 col-sm-3'>
-      <div class='counter-text'>
-        <span class='box1 test'>
-          <i className={props.icon}></i>
+    <div className='col-md-3 col-sm-3'>
+      <div className='counter-text'>
+        <span className='box1 test'>
+          <i className={icon}></i>
         </span>
-        <h3>{props.number} </h3>
-        <p>{props.name} </p>
+        <h3>{number} </h3>
+        <p>{name} </p>
       </div>
     </div>
   );
 };
-
-export default stat;
+Stat.propTypes = {
+  statData: PropTypes.object.isRequired
+};
+export default Stat;

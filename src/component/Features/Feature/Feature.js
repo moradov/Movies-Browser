@@ -1,16 +1,22 @@
 import React from "react";
-const Feature = props => {
+import PropTypes from "prop-types";
+const Feature = ({ name, icon, description }) => {
   return (
     <div className='col-md-4 col-sm-4'>
       <div className='features-content'>
         <span className='box1'>
-          <i className={props.icon}></i>
+          <i className={icon}></i>
         </span>
-        <h3>{props.name} </h3>
-        <p>{props.description}</p>
+        <h3>{name} </h3>
+        <p>{description}</p>
       </div>
     </div>
   );
 };
-
+//Typecheking with propTypes
+Feature.propTypes = {
+  name: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired
+};
 export default Feature;

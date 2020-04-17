@@ -1,5 +1,5 @@
 import React from "react";
-import Statistique from "./stat/stat";
+import Statistique from "./Stat/Stat";
 const Stat = () => {
   const stats = [
     {
@@ -24,15 +24,10 @@ const Stat = () => {
     }
   ];
   return (
-    <section class='counter'>
-      <div class='container'>
+    <section className='counter'>
+      <div className='container'>
         {stats.map(st => (
-          <Statistique
-            key={st.name}
-            icon={st.icon}
-            name={st.name}
-            number={st.number}
-          />
+          <Statistique statData={st} key={st.name} />
         ))}
       </div>
     </section>
