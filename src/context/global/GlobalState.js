@@ -13,6 +13,16 @@ import {
   SET_SEARCH_KEYS,
   CLEAR_MODEL
 } from "../types";
+let appId;
+let appKey;
+if (process.env.NODE_ENV !== "production") {
+  appId = process.env.REACT_APP_ID;
+  aqppKey = process.env.REACT_APP_KEY;
+} else {
+  appId = process.env.APP_ID;
+  appKey = process.env.APP_KEY;
+}
+
 const GlobalState = props => {
   const initState = {
     defaultJobs: [],
@@ -35,9 +45,10 @@ const GlobalState = props => {
     setLoading(true);
     setError(null);
     clearDefaultJobs();
+    console.log();
     axios
       .get(
-        "https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=10&what_and=web"
+        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=${appId}&app_key=${appKey}&results_per_page=10&what_and=web`
       )
       .then(res => {
         dispatch({ type: SET_DEFAULT_JOBS, payload: res.data.results });
@@ -50,20 +61,18 @@ const GlobalState = props => {
   };
   // get jobs by search
   const getJobs = data => {
-    console.log(data);
     setLoading(true);
     setError(null);
     clearSearchJobs();
     axios
       .get(
-        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=8ba6341e&app_key=2863bf154d48bce5fe3ebd1fcc58bb27%09&results_per_page=100&what=${
+        `https://api.adzuna.com/v1/api/jobs/gb/search/10?app_id=${appId}&app_key=${appKey}&results_per_page=100&what=${
           data ? data.skill : state.searchKeys.skill
         }&where=${data ? data.location : state.searchKeys.location}`
       )
       .then(res => {
         dispatch({ type: SET_SEARCH_JOBS, payload: res.data.results });
         setLoading(false);
-        console.log(data);
       })
       .catch(err => {
         setLoading(false);

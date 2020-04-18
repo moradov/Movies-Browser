@@ -20,7 +20,7 @@ const Search = ({ history, location }) => {
     .replace("?skill=", "")
     .replace("location=", "")
     .split("&");
-  console.log(typeof location.search);
+
   useEffect(() => {
     // getJobs when the component load
     if (search.skill && search.location) {
