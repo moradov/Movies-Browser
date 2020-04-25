@@ -1,67 +1,87 @@
 import {
-  SET_DEFAULT_JOBS,
-  SET_SEARCH_JOBS,
   SET_LOADING,
-  SET_MODEL,
-  SET_ERR,
-  CLEAR_SEARCH_JOBS,
-  CLEAR_DEFAULT_JOBS,
-  SET_SEARCH_KEYS,
-  CLEAR_MODEL
-} from "../types";
-
+  SET_SEARCH_KEY_TO_STATE,
+  SET_MOVIES_DATA,
+  SET_MOVIE_DETAILS,
+  SET_MOVIE_CAST,
+  SET_ERROR,
+  CLEAR_MOVIES,
+  CLEAR_MOVIE_DETAILS,
+  SET_TOTAL_PAGES,
+  SET_CURRENT_PAGE,
+  SET_RANDOM_MOVIE_TO_STATE,
+  SET_CURRENT_PAGE_PATH,
+} from "./types";
 export default (state, action) => {
   switch (action.type) {
-    case SET_DEFAULT_JOBS:
+    case SET_SEARCH_KEY_TO_STATE:
       return {
         ...state,
-        defaultJobs: action.payload,
-        loading: false
+        searchKey: action.payload,
       };
-    case SET_SEARCH_JOBS:
+    case SET_MOVIES_DATA:
       return {
         ...state,
-        searchJobs: action.payload,
-        loading: false
+        moviesList: action.payload,
+        loading: false,
+      };
+    case SET_MOVIE_DETAILS:
+      return {
+        ...state,
+        movieDetails: action.payload,
+        loading: false,
+      };
+    case SET_MOVIE_CAST:
+      return {
+        ...state,
+        movieCast: action.payload,
+        loading: false,
       };
     case SET_LOADING:
       return {
         ...state,
-        loading: action.payload
+        loading: action.payload,
       };
-    case SET_MODEL:
+    case SET_ERROR:
       return {
         ...state,
-        model: { ...action.payload }
+        err: action.payload,
       };
-    case CLEAR_MODEL:
+    case CLEAR_MOVIES:
       return {
         ...state,
-        model: null
+        moviesList: [],
       };
-    case CLEAR_SEARCH_JOBS:
+    case CLEAR_MOVIE_DETAILS:
       return {
         ...state,
-        searchJobs: []
+        movieDetails: [],
+        tes: null,
       };
-    case CLEAR_DEFAULT_JOBS:
+    case SET_TOTAL_PAGES:
       return {
         ...state,
-        defaultJobs: []
+        totalPages: action.payload,
       };
-    case SET_ERR:
+    case SET_CURRENT_PAGE:
       return {
         ...state,
-        err: action.payload
+        currentPage: action.payload,
       };
-    case SET_SEARCH_KEYS:
+    case SET_CURRENT_PAGE_PATH:
       return {
         ...state,
-        searchKeys: action.payload
+        currentPagePath: action.payload,
+      };
+    case SET_RANDOM_MOVIE_TO_STATE:
+      return {
+        ...state,
+        randomMovie: action.payload,
+        loading: false,
       };
     default:
       return {
-        ...state
+        ...state,
       };
   }
 };
